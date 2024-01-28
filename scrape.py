@@ -28,7 +28,7 @@ def extract_text_from_content(html_content):
 url_list = ["https://billpay.umd.edu/UndergraduateTuition", "https://billpay.umd.edu/GraduateTuition", "https://billpay.umd.edu/billing", "https://reslife.umd.edu/terp-housing/residence-halls", "https://reslife.umd.edu/terp-housing/rates-fees", "https://reslife.umd.edu/terp-housing/room-layouts-tours", "https://reslife.umd.edu/terp-housing/dates", "https://dining.umd.edu/hours-locations/dining-halls", "https://dining.umd.edu/hours-locations/cafes", "https://dining.umd.edu/student-dining-plans", "https://recwell.umd.edu/facilities/facilities"]
 info = ""
 for url in url_list:
-    html_content = get_website_content(url_list)
+    html_content = get_website_content(url)
     if html_content:
         text = extract_text_from_content(html_content)
         formatted_text = ' '.join(text.split())
