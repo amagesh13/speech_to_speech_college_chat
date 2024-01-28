@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  
+    .button {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background-color: #3498db;
+      color: #fff;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s, transform-origin 0.2s;
+      animation: floatAnimation 2s infinite alternate;
+      font-size: 40px;
+    }
+
+    /* Glow effect */
+    .button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2); /* Glow color and opacity */
+      border-radius: 5px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+  
+    .button:active {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      transform: scale(0.95);
+      animation: none; /* Disable the floating animation when the button is pressed */
+    }
+
+    .mic {
+        width: 80%;
+        height: auto;
+    }
+  
+    @keyframes floatAnimation {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="button" onclick="buttonClick()"><img class='mic' src='mic.png'></div>
+<div id="output"></div>
+
+<script>
+  function buttonClick() {
+    document.getElementById('output').innerText = 'Executing speech-to-speech script...';
+
+    // Send an AJAX request to trigger the speech-to-speech script
+    fetch('/run-speech-to-speech', {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            document.getElementById('output').innerText = 'Error: ' + data.error;
+        } else {
+            document.getElementById('output').innerText = 'Output: ' + data.output;
+        }
+    })
+    .catch(error => {
+        document.getElementById('output').innerText = 'Error: ' + error.message;
+    });
+  }
+</script>
+
+</body>
+</html>
